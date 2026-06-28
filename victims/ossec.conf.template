@@ -1,0 +1,10 @@
+<ossec_config>
+
+  <client>
+    <server>
+      <address>__WAZUH_MANAGER__</address>
+      <port>1514</port>
+      <protocol>tcp</protocol>
+    </server>
+  </client>
+</ossec_config>

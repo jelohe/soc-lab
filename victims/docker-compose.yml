@@ -1,0 +1,26 @@
+services:
+  victim1:
+    build: .
+    container_name: victim1
+    hostname: victim1
+    restart: unless-stopped
+    environment:
+      - WAZUH_MANAGER=wazuh.manager
+      - AUTH_PASS=SecretPassword     
+    networks:
+      - soc-net
+
+  victim2:
+    build: .
+    container_name: victim2
+    hostname: victim2
+    restart: unless-stopped
+    environment:
+      - WAZUH_MANAGER=wazuh.manager
+      - AUTH_PASS=SecretPassword     
+    networks:
+      - soc-net
+
+networks:
+  soc-net:
+    external: true
