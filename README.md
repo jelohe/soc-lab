@@ -3,7 +3,7 @@
 ---
 C4P
 ---
-# DEL 0 AL CAOS: CONSTRUYE TU LABORATORIO DE CIBERDEFENSA
+# DE 0 AL CAOS: CONSTRUYE TU LABORATORIO DE CIBERDEFENSA
 
 ## Monta un SOC con herramientas open source, lanza ataques contra tu propia infraestructura y aprende a detectarlos, investigarlos y combatirlos.
 
