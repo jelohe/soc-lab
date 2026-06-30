@@ -1,11 +1,12 @@
-# SOC CASERO - WORKSHOP
+# DE 0 AL CAOS: CONSTRUYE TU LABORATORIO DE CIBERDEFENSA
 
 ---
 C4P
 ---
-# DE 0 AL CAOS: CONSTRUYE TU LABORATORIO DE CIBERDEFENSA
 
-## Monta un SOC con herramientas open source, lanza ataques contra tu propia infraestructura y aprende a detectarlos, investigarlos y combatirlos.
+## Monta un Centro de Operaciones de Seguridad (SOC) con herramientas open source, lanza ataques contra tu propia infraestructura y aprende a detectarlos, investigarlos y combatirlos.
+
+> Un SIEM empresarial puede costar cientos o miles de euros, pero aprender puede ser gratuito.
 
 ### ¿Qué ve un analista de seguridad cuando una red está siendo atacada?
 
@@ -19,19 +20,18 @@ Al finalizar, mostraremos cómo ampliar el laboratorio para seguir experimentand
 
 ### ¿A quién va dirigido?
 
-Este taller está dirigido a cualquier persona interesada en la ciberseguridad.
+Cualquier persona interesada en la ciberseguridad profesional.
 
-Si nunca has trabajado con un SOC o un SIEM, descubrirás cómo funcionan desde dentro y cómo se detectan e investigan los incidentes de seguridad.
+Si nunca has trabajado con un SIEM, descubrirás cómo funcionan desde dentro y cómo se detectan e investigan los incidentes de seguridad.
 
 Si vienes del mundo del pentesting o del red team, entenderás qué herramientas tienen los defensores para detectar y combatir ataques.
 
-Si ya trabajas en un SOC, conocerás una implementación basada en software libre y te llevarás un laboratorio listo para seguir experimentando.
+Si ya trabajas como blue team, conocerás una implementación basada en software libre y te llevarás un laboratorio listo para seguir experimentando.
 
 ---
 REPO
 ---
 
-Contiene:
 - Wazuh single node (docker)
-- Ordenadores victimas
-- Un makefile para levantarlo todo
+- Contenedores con dos maquinas victima
+- Un makefile para levantarlo todo con un comando
