@@ -1,5 +1,4 @@
 <ossec_config>
-
   <client>
     <server>
       <address>__WAZUH_MANAGER__</address>
@@ -7,4 +6,14 @@
       <protocol>tcp</protocol>
     </server>
   </client>
+
+  <localfile>
+    <log_format>syslog</log_format>
+    <location>/var/log/syslog</location>
+  </localfile>
+
+  <localfile>
+    <log_format>syslog</log_format>
+    <location>/var/log/auth.log</location>
+  </localfile>
 </ossec_config>

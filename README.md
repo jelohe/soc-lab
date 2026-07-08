@@ -1,37 +1,72 @@
-# DE 0 AL CAOS: CONSTRUYE TU LABORATORIO DE CIBERDEFENSA
+# SOC Lab — Wazuh SIEM + Victim Machines
 
----
-C4P
----
+Build a Security Operations Center (SOC) with Wazuh, launch attacks against your own infrastructure, and practice detection and response.
 
-## Monta un Centro de Operaciones de Seguridad (SOC) con herramientas open source, lanza ataques contra tu propia infraestructura y aprende a detectarlos, investigarlos y combatirlos.
+## Architecture
 
-> Un SIEM empresarial puede costar cientos o miles de euros, pero aprender puede ser gratuito.
+| Service | Role |
+|---|---|
+| `wazuh.manager` | Wazuh manager — SIEM server, agent management, alerting |
+| `wazuh.indexer` | Wazuh indexer — OpenSearch storage and indexing |
+| `wazuh.dashboard` | Wazuh dashboard — OpenSearch Dashboards + Wazuh plugin UI |
+| `victim1` | Debian machine with Wazuh agent, SSH, syslog |
+| `victim2` | Debian machine with Wazuh agent, SSH, syslog |
 
-### ¿Qué ve un analista de seguridad cuando una red está siendo atacada?
+## Prerequisites
 
-En este taller construiremos un laboratorio de ciberdefensa basado en software libre con Wazuh y recorreremos el ciclo completo de un incidente de seguridad. 
+- Linux with Docker and Docker Compose plugin
+- Ports 443, 514/udp, 1514, 1515, 9200, 55000 available (or adjust port mappings)
 
-Primero nos pondremos en la piel del atacante para generar actividad maliciosa sobre nuestra propia infraestructura y, después, cambiaremos al lado del defensor para comprender cómo esa actividad se transforma en eventos, alertas e investigaciones dentro de un SOC.
+## Quick start
 
-Veremos cómo fluye la información desde los sistemas monitorizados hasta el SIEM, aprenderemos a crear nuestras propias reglas de detección, interpretaremos las evidencias generadas por los ataques y veremos cómo investigar y responder ante ellos.
+```bash
+sudo sysctl -w vm.max_map_count=262144
+make up
+```
 
-Al finalizar, mostraremos cómo ampliar el laboratorio para seguir experimentando en casa, incorporando nuevos servicios, fuentes de datos y escenarios de ataque.
+The first startup takes about 1 minute while the indexer initializes.
 
-### ¿A quién va dirigido?
+## Access the dashboard
 
-Cualquier persona interesada en la ciberseguridad profesional.
+Open **https://localhost** in your browser.
 
-Si nunca has trabajado con un SIEM, descubrirás cómo funcionan desde dentro y cómo se detectan e investigan los incidentes de seguridad.
+| User | Password |
+|---|---|
+| `admin` | `SecretPassword` |
+| `kibanaserver` | `kibanaserver` |
 
-Si vienes del mundo del pentesting o del red team, entenderás qué herramientas tienen los defensores para detectar y combatir ataques.
+## How to use this lab
 
-Si ya trabajas como blue team, conocerás una implementación basada en software libre y te llevarás un laboratorio listo para seguir experimentando.
+1. **Attack** — SSH into a victim container and simulate malicious activity (e.g., failed logins, privilege escalation, file changes).
+2. **Detect** — Watch alerts appear in the Wazuh dashboard under the **Modules** or **Security events** sections.
+3. **Investigate** — Use the dashboard to explore the full event data, create custom rules, and run queries against the indexer.
+4. **Expand** — Add more victims, services, or custom detection rules to the lab.
 
----
-REPO
----
+## Useful commands
 
-- Wazuh single node (docker)
-- Contenedores con dos maquinas victima
-- Un makefile para levantarlo todo con un comando
+| Action | Command |
+|---|---|
+| Start everything | `make up` |
+| Stop everything | `make down` |
+| Follow Wazuh logs | `make logs` |
+| Follow victim logs | `make victim-logs` |
+| Regenerate certificates | `make certs` |
+
+## Credentials
+
+| Purpose | Username | Password |
+|---|---|---|
+| Wazuh Indexer / Dashboard admin | `admin` | `SecretPassword` |
+| Dashboard Kibana server | `kibanaserver` | `kibanaserver` |
+| Wazuh API (WUI) | `wazuh-wui` | `MyS3cr37P450r.*-` |
+
+## Network
+
+All containers communicate over a shared Docker bridge network called **`soc-net`** (created automatically by the Wazuh stack).
+
+## Troubleshooting
+
+- **Certificate permission denied**: After `make certs`, the `wazuh/config/wazuh_indexer_ssl_certs/` directory is owned by root. Run `sudo chown -R $USER:$USER wazuh/config/wazuh_indexer_ssl_certs` if needed.
+- **Victims fail to connect**: Start the Wazuh stack first so the `soc-net` network is created before the victims.
+- **Dashboard shows "Connection failed"**: Wait ~1 minute for the indexer to finish initializing, then refresh.
+- **Port conflicts**: Edit port mappings in `wazuh/docker-compose.yml`.

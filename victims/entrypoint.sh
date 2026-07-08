@@ -25,6 +25,9 @@ rm -f /var/ossec/etc/client.keys || true
 
 echo "[3/3] Starting agent..."
 
+mkdir -p /var/run/rsyslog
+rsyslogd
+
 /var/ossec/bin/wazuh-control start
 
 tail -f /dev/null
